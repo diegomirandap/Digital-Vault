@@ -29,3 +29,11 @@ senha não pode ter 2 digitos iguais em sequencia
 implementar as infos do user em um banco de dados sabe-se lá como
 
 tabela de log armzenado no banco  de dados
+
+
+
+
+COMO CONFIGURAR O BANCO!!!!!!!!!!!!!!!!!!
+no diretorio do base do trbalho
+javac -cp "lib/sqlite-jdbc-3.49.1.0.jar" -d bin DB/DBStart.java
+java --enable-native-access=ALL-UNNAMED -cp "lib/sqlite-jdbc-3.49.1.0.jar;bin" DB/DBStart
