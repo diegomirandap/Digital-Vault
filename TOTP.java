@@ -33,7 +33,7 @@ public class TOTP {
         System.out.printf("\nTOTPCodeHexOffset=%01x",offset);
         System.out.println("\nTOTPCodeByteOffset="+offset);
         System.out.println("TruncInitPos="+(offset*2));
-        System.out.println("TruncFinalPos="+(offset*2+8));
+        System.out.println("TruncFinalPos="+(offset*2+7));
 
         int p1 = (hash[offset] & 0x7F) << 24;      // hash[10] = 0xBD & 0x7F = 0x3D
         int p2 = (hash[offset + 1] & 0xFF) << 16;  // hash[11] = 0xB0
@@ -50,19 +50,14 @@ public class TOTP {
         return String.format("%06d", otp);
     }
 
-    private byte[] longToBytes(long value) {
-        byte[] result = new byte[8];
-        for (int i = 7; i >= 0; i--) {
-            result[i] = (byte) (value & 0xFF);
-            value >>= 8;
-        }
-        return result;
-    }
-
     private String TOTPCode(long timeInterval) {
         System.out.println("\n[+] Gerando código para timeInterval: " + timeInterval);
 
-        byte[] counter = longToBytes(timeInterval);
+        byte[] counter = new byte[8];
+        for (int i = 7; i >= 0; i--) {
+            counter[i] = (byte) (timeInterval & 0xFF);
+            timeInterval >>= 8;
+        }
 
         //System.out.print("[1] Contador (bytes): ");
         System.out.print("TimeInterval=");
@@ -101,8 +96,8 @@ public class TOTP {
 
     // --- Exemplo de execução detalhada ---
     public static void main(String[] args) throws Exception {
-        String base32Secret = "JBSWY3DPEHPK3PXP"; // mesma chave que você configura no Authenticator
-        System.out.println("Key(hex)="+base32Secret);
+        String base32Secret = "JBSWY3DPEHPK3PXP"; // chave aletori do user      vai ser preciso criar um processo para adicionar/criar ela
+        System.out.println("Key(hex)="+base32Secret); // em base 32 adiciona no autenticator     adicionar no banco com o aes
         TOTP totp = new TOTP(base32Secret, 30);
 
         long now = System.currentTimeMillis() / 1000 / 30;
@@ -124,3 +119,6 @@ public class TOTP {
         System.out.println("Depois: " + futureCode);
     }
 }
+
+// bcript para autenticar senha da tela
+// validar os documentos integridade e autentuvidade
