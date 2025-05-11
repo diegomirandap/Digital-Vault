@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f0a1ff8-20ab-445d-a655-64056baf6c33" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Trabalho3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Trabalho3.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/TOTP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/TOTP.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,22 +34,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.TOTP.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TesteConexaoSQL.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/diegu/Downloads/mysql-connector-j-9.3.0/mysql-connector-j-9.3.0/mysql-connector-j-9.3.0.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.TOTP.executor": "Run",
+    "Application.TecladoVirtualSeguro.executor": "Run",
+    "Application.TesteConexaoSQL.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/diegu/Downloads/bcprov-jdk15on-168.jar",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
-  <component name="RunManager" selected="Application.TesteConexaoSQL">
+}]]></component>
+  <component name="RunManager" selected="Application.TecladoVirtualSeguro">
+    <configuration name="DB" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DB" />
+      <module name="Trabalho3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TOTP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TOTP" />
       <module name="Trabalho3" />
@@ -59,8 +65,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TesteConexaoSQL" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TesteConexaoSQL" />
+    <configuration name="TecladoVirtualSeguro" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="TecladoVirtualSeguro" />
       <module name="Trabalho3" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -68,7 +74,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.TesteConexaoSQL" />
+        <item itemvalue="Application.TecladoVirtualSeguro" />
+        <item itemvalue="Application.DB" />
         <item itemvalue="Application.TOTP" />
       </list>
     </recent_temporary>
