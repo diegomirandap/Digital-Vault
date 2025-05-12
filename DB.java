@@ -40,7 +40,7 @@ public class DB {
                         " cert_pem TEXT NOT NULL," +
                         " chave_privada BLOB NOT NULL);",
 
-                // Tabela Usuarios (sem as foreign keys por enquanto)
+                // Tabela Usuarios
                 "CREATE TABLE IF NOT EXISTS Usuarios (" +
                         " uid INTEGER PRIMARY KEY AUTO_INCREMENT," +
                         " login_name VARCHAR(255) NOT NULL UNIQUE," +
@@ -131,10 +131,10 @@ public class DB {
         }
     }
 
-    public String buscarSenhaHash(String login) {
-        String sql = "SELECT senha_hash FROM Usuarios WHERE login_name = ?";
+    public static String buscarSenhaHash(int id) {
+        String sql = "SELECT senha_hash FROM Usuarios WHERE uid = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, login);
+            stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             return rs.next() ? rs.getString("senha_hash") : null;
         } catch (SQLException e) {

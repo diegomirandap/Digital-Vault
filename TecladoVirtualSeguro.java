@@ -16,7 +16,7 @@ public class TecladoVirtualSeguro {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { // args[0] == login (ainda descobrir se vai ser apenas o email ou uid
         Scanner scanner = new Scanner(System.in);
         SecureRandom random = new SecureRandom();
         List<Par> sequenciaEscolhida = new ArrayList<>();
@@ -69,14 +69,51 @@ public class TecladoVirtualSeguro {
         }
 
         System.out.println("\nGerando bcrypt hashes para " + possiveisSenhas.size() + " senhas possíveis:");
+
+        //String hashBanco = DB.buscarSenhaHash(args[0]);
+        String hashBanco = "$2y$08$zLfjWZprtU2xoTJJshoNdutUl1Orw.6um8Mrrwo0uLni6GBS7sP4O";
+
         for (String senha : possiveisSenhas) {
+            /*
             if (senha.equals("13572468")) {
                 byte[] salt = new byte[16];
                 random.nextBytes(salt);
-                String hash = OpenBSDBCrypt.generate(senha.toCharArray(), salt, 12);
-                System.out.println("Senha encontrada: " + senha);
-                System.out.println("BCrypt hash: " + hash);
+                String hash = OpenBSDBCrypt.generate(senha.toCharArray(), salt, 8);
+            */
+            //vai acessar o banco e pegar o salt atraves da senha armazenada em texto plano
+            //calcula o hash para a senha atual e compara com a optida dentro do banco
+            //utiliza uma função do proprio openbsbcrypt para realizar todo esse processo
+
+            boolean resultado = OpenBSDBCrypt.checkPassword(hashBanco, senha.toCharArray());
+            if (resultado){
+                System.out.println("Senha validada");
+            }
+            else{
+                // Retry
+                System.out.println("Senha não validada");
             }
         }
     }
 }
+
+
+
+/*
+primeiro login: acesso direto ao cadastramento e depois fecha a execução
+a partir do segundo: tela de login e resto do programa
+
+senha pessoal 8 a 10 digitos
+pressiona o botão ate 10 vezes, após a 8tava pode habilitar o botão de inserção
+usa essa senha como semente do prng para o hash da cripto do token
+
+adm ve indice e seus qrquivos e pode cadastrar o usuário
+
+para o sistema funcionar, deve fornecer a chave privada do primeiro adm (interrogaçao)
+
+
+apos o cadastro
+verifica dados do cd
+gera o segredo na tela para cadastro - utiliza o secure random pra gerar aleatoriamente (array de bites) e passa para base32
+adiciona no authenticator (qrcode ou digita)
+adiciona no banco o segredo criptografado com a senha do usuário
+ */
