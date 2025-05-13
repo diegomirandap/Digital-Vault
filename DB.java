@@ -27,6 +27,7 @@ public class DB {
     }
 
     public static void inicializarBanco() {
+        criarBanco();
         String[] comandosCriacao = {
                 // Tabela Grupos
                 "CREATE TABLE IF NOT EXISTS Grupos (" +
@@ -154,7 +155,7 @@ public class DB {
             return null;
         }
     }
-
+/*
     public void registrarLog(int mid, Integer uid, String arquivo) {
         String sql = "INSERT INTO Registros (mid, uid, arquivo) VALUES (?, ?, ?)";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -166,7 +167,7 @@ public class DB {
             System.err.println("Erro ao registrar log: " + e.getMessage());
         }
     }
-
+*/
     public void incrementarAcessos(int uid) {
         String sql = "UPDATE Usuarios SET tot_acessos = tot_acessos + 1 WHERE uid = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -200,6 +201,11 @@ public class DB {
         }
     }
 
+    public static void addLog(int mid, String email, String filename){
+
+        return;
+    }
+
     public int contarUsuarios() {
         String sql = "SELECT COUNT(*) AS total FROM Usuarios";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -209,11 +215,5 @@ public class DB {
             System.err.println("Erro ao contar usuários: " + e.getMessage());
             return -1;
         }
-    }
-
-
-    public static void main(String[] args) {
-        criarBanco();
-        inicializarBanco();
     }
 }
