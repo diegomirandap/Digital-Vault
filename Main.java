@@ -1,20 +1,25 @@
-import java.sql.SQLException;
+import views.*;
+import javax.swing.*;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        // abrir o banco de dados
-        DB.inicializarBanco();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Cofre Digital");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(500, 300);
+            frame.setLocationRelativeTo(null);
 
-        DB.addLog(1001, null, null);
-        /*
-        if semUser{
-            sequenciaSemUser()
-        }
-        else{
-            sequenciaComUser()
-        */
+            // Aqui você simularia a verificação real no banco
+            int totalUsuarios = 1; // DB.contarUsuarios();
 
+            if (totalUsuarios == 0) {
+                frame.setContentPane(new TelaCadastro(frame, true)); // encerra app após cadastro
+            } else {
+                frame.setContentPane(new TelaLogin1(frame));
+            }
 
+            frame.setVisible(true);
+        });
     }
 }
 

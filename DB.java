@@ -206,7 +206,7 @@ public class DB {
         return;
     }
 
-    public int contarUsuarios() {
+    public static int contarUsuarios() {
         String sql = "SELECT COUNT(*) AS total FROM Usuarios";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
