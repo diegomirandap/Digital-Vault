@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f0a1ff8-20ab-445d-a655-64056baf6c33" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/DB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Trabalho3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Trabalho3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/DB2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TOTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/TOTP.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TecladoVirtualSeguro.java" beforeDir="false" afterPath="$PROJECT_DIR$/TecladoVirtualSeguro.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/DB.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/DB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/TecladoVirtualSeguro.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/TecladoVirtualSeguro.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/DB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/TOTP.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/TecladoVirtualSeguro$Par.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/TecladoVirtualSeguro.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaCadastro.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaCadastro.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaLogin1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaLogin1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/TelaCadastro.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TelaCadastro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/TelaLogin1.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TelaLogin1.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +50,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.Main.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.TOTP.executor": "Run",
     "Application.TecladoVirtualSeguro.executor": "Run",
@@ -50,14 +60,14 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Diego/OneDrive/FACUL/INF1416-Segurança/Trabalho3",
+    "last_opened_file_path": "C:/Users/diegu/Downloads/javase-3.5.1.jar",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.Main.Main">
     <configuration name="DB" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DB" />
       <module name="Trabalho3" />
@@ -68,6 +78,19 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Trabalho3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
+      <module name="Trabalho3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -88,6 +111,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main.Main" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.TecladoVirtualSeguro" />
         <item itemvalue="Application.DB" />

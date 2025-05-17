@@ -1,8 +1,13 @@
 package views;
 
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.security.SecureRandom;
+import Main.*;
+import DB.*;
+
 public class TelaCadastro extends JPanel {
     JTextField campoCert, campoChave, campoFrase;
     JComboBox<String> comboGrupo;
@@ -18,7 +23,12 @@ public class TelaCadastro extends JPanel {
         campoFrase = new JTextField(255);
         campoSenha = new JPasswordField(10);
         campoConfirmacao = new JPasswordField(10);
-        comboGrupo = new JComboBox<>(new String[]{"Administrador", "Usuário"});
+        if (fecharAposCadastro){
+            comboGrupo = new JComboBox<>(new String[]{"Administrador"});
+        }
+        else{
+            comboGrupo = new JComboBox<>(new String[]{"Administrador", "Usuário"});
+        }
 
         add(new JLabel("Caminho do Certificado Digital:")); add(campoCert);
         add(new JLabel("Caminho da Chave Privada:")); add(campoChave);
@@ -31,6 +41,8 @@ public class TelaCadastro extends JPanel {
         JButton botaoVoltar = new JButton("Voltar");
 
         botaoCadastrar.addActionListener(e -> {
+            String frase = new String(campoFrase.getText());
+            String grupo = new String(String.valueOf(comboGrupo.getSelectedItem()));
             String senha = new String(campoSenha.getPassword());
             String confSenha = new String(campoConfirmacao.getPassword());
 
@@ -45,7 +57,52 @@ public class TelaCadastro extends JPanel {
 
             // Lógica de cadastro no banco seria chamada aqui...
 
-            if (fecharAposCadastro) System.exit(0);
+            String hashSenha = TecladoVirtualSeguro.criarSenha(senha);
+
+            //login e nome vem do certificado digital
+            int grupoid;
+            if (grupo.equals("Administrador")){
+                grupoid = 1;
+            }else {
+                grupoid = 2;
+            }
+            try {
+                // 1. Gera segredo em base32
+                String segredoBase32 = TOTPAux.gerarTOTPBase32();
+
+                // 2. Gera chave AES a partir da senha
+                SecretKeySpec chaveAES = TOTPAux.gerarChaveAES(frase);
+
+                // 3. Criptografa o segredo base32
+                byte[] totp = TOTPAux.criptografarAES(segredoBase32, chaveAES);
+
+                // 4. Exibe segredo (ou URI TOTP) ao usuário
+                String email = "mail2@mail.com"; // ajuste conforme necessário
+                String uri = "otpauth://totp/Cofre%20Digital:" + email +
+                        "?secret=" + segredoBase32 + "&issuer=Cofre%20Digital";
+
+                JOptionPane.showMessageDialog(this,
+                        "Cadastre no Authenticator com este código:\n" + segredoBase32 + "\nOu utilize o QRCode a seguir:");
+
+                QRCode.mostrarQRCode(uri);
+
+                // 5. Salva no banco junto com outros dados
+                boolean res = DB.inserirUsuario("mail2@mail.com","nome2",hashSenha,totp,grupoid, -1);
+                if (!res){
+                    JOptionPane.showMessageDialog(this, "Erro ao inserir usuário. Tente novamente");
+                }
+                if (fecharAposCadastro){
+                    System.exit(0);
+                } else{
+                    mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame));
+                    mainFrame.revalidate();
+                    mainFrame.repaint();
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Erro ao gerar chave TOTP: " + ex.getMessage());
+            }
         });
 
         botaoVoltar.addActionListener(e -> System.exit(0));

@@ -1,11 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Types;
-
+/*
 public class DB {
     private static String SUA_SENHA = "@@1";
     private static final String URL_SERVIDOR = "jdbc:mysql://localhost/?user=root&password=" + SUA_SENHA;
@@ -101,7 +94,7 @@ public class DB {
         }
     }
 
-    public boolean inserirUsuario(String login, String nome, String senhaHash, byte[] secretTotp, int grupoId, int kid) {
+    public static boolean inserirUsuario(String login, String nome, String senhaHash, byte[] secretTotp, int grupoId, int kid) {
         String sql = "INSERT INTO Usuarios (login_name, nome, senha_hash, secret_totp, grupo_id, kid) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, login);
@@ -167,7 +160,7 @@ public class DB {
             System.err.println("Erro ao registrar log: " + e.getMessage());
         }
     }
-*/
+*
     public void incrementarAcessos(int uid) {
         String sql = "UPDATE Usuarios SET tot_acessos = tot_acessos + 1 WHERE uid = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -216,4 +209,4 @@ public class DB {
             return -1;
         }
     }
-}
+}*/

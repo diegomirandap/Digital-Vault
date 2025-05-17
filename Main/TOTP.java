@@ -1,4 +1,6 @@
-/*
+package Main;
+
+
 import java.util.Date;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -14,7 +16,7 @@ public class TOTP {
         if (this.key == null) {
             throw new Exception("Chave secreta inválida");
         }
-        System.out.println("Key32="+base32);
+        //System.out.println("Key32="+base32);
     }
 
     private byte[] HMAC_SHA1(byte[] counter, byte[] keyByteArray) {
@@ -30,10 +32,10 @@ public class TOTP {
 
     private String getTOTPCodeFromHash(byte[] hash) {
         int offset = hash[hash.length - 1] & 0x0F;
-        System.out.printf("\nTOTPCodeHexOffset=%01x",offset);
-        System.out.println("\nTOTPCodeByteOffset="+offset);
-        System.out.println("TruncInitPos="+(offset*2));
-        System.out.println("TruncFinalPos="+(offset*2+7));
+        //System.out.printf("\nTOTPCodeHexOffset=%01x",offset);
+        //System.out.println("\nTOTPCodeByteOffset="+offset);
+        //System.out.println("TruncInitPos="+(offset*2));
+        //System.out.println("TruncFinalPos="+(offset*2+7));
 
         int p1 = (hash[offset] & 0x7F) << 24;      // hash[10] = 0xBD & 0x7F = 0x3D
         int p2 = (hash[offset + 1] & 0xFF) << 16;  // hash[11] = 0xB0
@@ -42,16 +44,16 @@ public class TOTP {
 
         int binary = p1 | p2 | p3 | p4;
 
-        System.out.printf("TruncatedHash=%08x\n",binary);
-        System.out.printf("BaseValueOfTOTPCode=%08d\n",binary);
+        //System.out.printf("TruncatedHash=%08x\n",binary);
+        //System.out.printf("BaseValueOfTOTPCode=%08d\n",binary);
         int otp = binary % 1_000_000;
-        System.out.printf("FinalValueOfTOTPCode=%06d\n",otp);
+        //System.out.printf("FinalValueOfTOTPCode=%06d\n",otp);
         //System.out.println(String.format("%06d", otp));
         return String.format("%06d", otp);
     }
 
     private String TOTPCode(long timeInterval) {
-        System.out.println("\n[+] Gerando código para timeInterval: " + timeInterval);
+        //System.out.println("\n[+] Gerando código para timeInterval: " + timeInterval);
 
         byte[] counter = new byte[8];
         for (int i = 7; i >= 0; i--) {
@@ -60,20 +62,20 @@ public class TOTP {
         }
 
         //System.out.print("[1] Contador (bytes): ");
-        System.out.print("TimeInterval=");
+        //System.out.print("TimeInterval=");
         for (byte b : counter) {
             System.out.printf("%02x", b);
         }
 
         byte[] hash = HMAC_SHA1(counter, key);
         //System.out.print("\n[2] Hash HMAC-SHA1: ");
-        System.out.print("\nHashString=");
+        //System.out.print("\nHashString=");
         for (byte b : hash) {
-            System.out.printf("%02x", b);
+            //System.out.printf("%02x", b);
         }
 
         String otp = getTOTPCodeFromHash(hash);
-        System.out.println("[3] Código gerado: " + otp);
+        //System.out.println("[3] Código gerado: " + otp);
         return otp;
     }
 
@@ -122,4 +124,3 @@ public class TOTP {
 
 // bcript para autenticar senha da tela
 // validar os documentos integridade e autentuvidade
-*/

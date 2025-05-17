@@ -1,9 +1,19 @@
-/*
+package Main;
+import DB.DB;
 import views.*;
 import javax.swing.*;
+import java.util.HashMap;
 
 public class Main {
+    // UID → [quantidade de falhas]
+    public static HashMap<Integer, Integer> tentativasFalhas = new HashMap<>();
+
+    // UID → timestamp (ms) de quando pode tentar de novo
+    public static HashMap<Integer, Long> bloqueios = new HashMap<>();
+
     public static void main(String[] args) {
+        DB.inicializarBanco();
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Cofre Digital");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -11,12 +21,21 @@ public class Main {
             frame.setLocationRelativeTo(null);
 
             // Aqui você simularia a verificação real no banco
-            int totalUsuarios = 1; // DB.contarUsuarios();
+            //int totalUsuarios = 1;
+            int totalUsuarios = DB.contarUsuarios();
 
             if (totalUsuarios == 0) {
                 frame.setContentPane(new TelaCadastro(frame, true)); // encerra app após cadastro
             } else {
-                frame.setContentPane(new TelaLogin1(frame));
+                if (totalUsuarios != -1){
+                    frame.setContentPane(new TelaLogin1(frame));
+
+                }
+                else{
+                    System.out.println("Não foi possível iniciar o sistema");
+                    System.exit(-1);
+                }
+
             }
 
             frame.setVisible(true);
@@ -24,7 +43,7 @@ public class Main {
     }
 }
 
-/
+/*
 sequenciaSemUser(){
     sequencia de cadastro
         Formulário de Cadastro:
