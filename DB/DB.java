@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 
 public class DB {
-    private static String SUA_SENHA = "@Fluminense@1";
+    private static String SUA_SENHA = "@@1";
     private static final String URL_SERVIDOR = "jdbc:mysql://localhost/?user=root&password=" + SUA_SENHA;
     private static final String URL_BANCO = "jdbc:mysql://localhost/cofredigital?user=root&password=" + SUA_SENHA;
 
@@ -120,7 +120,7 @@ public class DB {
         }
     }
 
-    public static boolean inserirUsuario(String login, String nome, String senhaHash, byte[] secretTotp, int grupoId, int kid) {
+    public static boolean inserirUsuario(String login, String nome, String senhaHash, byte[] secretTotp, int grupoId, Integer kid) {
         String sql = "INSERT INTO Usuarios (login_name, nome, senha_hash, secret_totp, grupo_id, kid) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, login);
@@ -128,11 +128,8 @@ public class DB {
             stmt.setString(3, senhaHash);
             stmt.setBytes(4, secretTotp);
             stmt.setInt(5, grupoId);
-            if (kid == -1) {
-                stmt.setNull(6, java.sql.Types.INTEGER);
-            } else {
-                stmt.setInt(6, kid);
-            }
+            if (kid == null || kid == -1) stmt.setNull(6, java.sql.Types.INTEGER);
+            else stmt.setInt(6, kid);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Erro ao inserir usuário: " + e.getMessage());
@@ -140,7 +137,7 @@ public class DB {
         }
     }
 
-    public int inserirChaveiro(int uid, String certPem, byte[] chavePrivada) {
+    public static int inserirChaveiro(int uid, String certPem, byte[] chavePrivada) {
         String sql = "INSERT INTO Chaveiro (uid, cert_pem, chave_privada) VALUES (?, ?, ?)";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, uid);
@@ -155,16 +152,86 @@ public class DB {
         }
     }
 
-    public static int buscarUid(String email){
+    public static boolean atualizarKidDoUsuario(int uid, int kid) {
+        String sql = "UPDATE Usuarios SET kid = ? WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, kid);
+            stmt.setInt(2, uid);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar KID do usuário: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static Integer buscarUid(String email) {
         String sql = "SELECT uid FROM Usuarios WHERE login_name = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
-            return rs.next() ? rs.getInt("uid") : null;
+            if (rs.next()) {
+                return rs.getInt("uid");
+            }
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar senha: " + e.getMessage());
-            return -1;
+            System.err.println("Erro ao buscar UID: " + e.getMessage());
         }
+        return null;
+    }
+
+    public static String buscarEmail(Integer uid) {
+        String sql = "SELECT login_name FROM Usuarios WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("login_name");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar email: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static String buscarNome(Integer uid) {
+        String sql = "SELECT nome FROM Usuarios WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nome");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar nome: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static Integer buscarGrupo(Integer uid) {
+        String sql = "SELECT grupo_id FROM Usuarios WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("grupo_id");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar nome: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static Integer contarAcessos(Integer uid) {
+        String sql = "SELECT tot_acessos FROM Usuarios WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("tot_acessos");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar nome: " + e.getMessage());
+        }
+        return null;
     }
 
     public static String buscarSenhaHash(int id) {
@@ -210,6 +277,16 @@ public class DB {
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Erro ao incrementar acessos: " + e.getMessage());
+        }
+    }
+
+    public static void incrementarConsultas(int uid) {
+        String sql = "UPDATE Usuarios SET tot_consultas = tot_consultas + 1 WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao incrementar consultas: " + e.getMessage());
         }
     }
 

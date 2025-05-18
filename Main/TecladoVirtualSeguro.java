@@ -2,8 +2,8 @@ package Main;
 
 import org.bouncycastle.crypto.generators.OpenBSDBCrypt;
 
-import java.security.SecureRandom;
 import java.util.*;
+import static Main.ChaveDigitalAux.gerarBytesAleatorios;
 
 public class TecladoVirtualSeguro {
     public static final int NUM_DIGITOS = 10;
@@ -18,10 +18,7 @@ public class TecladoVirtualSeguro {
     }
 
     public static String criarSenha(String senha){
-        SecureRandom random = new SecureRandom();
-
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
+        byte[] salt = gerarBytesAleatorios(16);
         String hash = OpenBSDBCrypt.generate(senha.toCharArray(), salt, 8);
 
         return hash;

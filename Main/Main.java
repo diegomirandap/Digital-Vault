@@ -11,13 +11,15 @@ public class Main {
     // UID → timestamp (ms) de quando pode tentar de novo
     public static HashMap<Integer, Long> bloqueios = new HashMap<>();
 
+    public static String fraseAdm = "";
+
     public static void main(String[] args) {
         DB.inicializarBanco();
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Cofre Digital");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(500, 300);
+            frame.setSize(800, 600);
             frame.setLocationRelativeTo(null);
 
             // Aqui você simularia a verificação real no banco
@@ -25,10 +27,10 @@ public class Main {
             int totalUsuarios = DB.contarUsuarios();
 
             if (totalUsuarios == 0) {
-                frame.setContentPane(new TelaCadastro(frame, true)); // encerra app após cadastro
+                frame.setContentPane(new TelaCadastro(frame, true, null)); // encerra app após cadastro
             } else {
                 if (totalUsuarios != -1){
-                    frame.setContentPane(new TelaLogin1(frame));
+                    frame.setContentPane(new TelaFraseAdm(frame));
 
                 }
                 else{

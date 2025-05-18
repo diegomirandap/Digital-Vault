@@ -84,8 +84,9 @@ public class TelaLogin2 extends JPanel {
         boolean validado = TecladoVirtualSeguro.validarSenha(combinacoes, hashDoBanco);
 
         if (validado) {
+            Main.tentativasFalhas.put(uid, 0);
             JOptionPane.showMessageDialog(this, "Senha validada com sucesso!");
-            mainFrame.setContentPane(new TelaLogin3(mainFrame, uid, "frasesecreta"));
+            mainFrame.setContentPane(new TelaLogin3(mainFrame, uid, Main.fraseAdm));
             mainFrame.revalidate();
         } else {
             int tentativas = Main.tentativasFalhas.getOrDefault(uid, 0) + 1;

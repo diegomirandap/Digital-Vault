@@ -39,11 +39,22 @@ public class TelaLogin3 extends JPanel {
                 boolean valido = totp.validateCode(codigo);
 
                 if (valido) {
+                    Main.tentativasFalhas.put(uid, 0);
                     JOptionPane.showMessageDialog(this, "Código validado com sucesso!");
-                    mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame));
+                    mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame, uid));
                     mainFrame.revalidate();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Código TOTP inválido. Tente novamente.");
+                    int tentativas = Main.tentativasFalhas.getOrDefault(uid, 0) + 1;
+                    Main.tentativasFalhas.put(uid, tentativas);
+
+                    if (tentativas >= 3) {
+                        long tempoBloqueio = System.currentTimeMillis() + (2 * 60 * 1000); // 2 minutos
+                        Main.bloqueios.put(uid, tempoBloqueio);
+                        JOptionPane.showMessageDialog(this, "Usuário bloqueado por 2 minutos após 3 tentativas inválidas.");
+                        mainFrame.setContentPane(new TelaLogin1(mainFrame));
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Código TOTP incorreto. Tentativa " + tentativas + "/3.");
+                    }
                 }
 
             } catch (Exception ex) {

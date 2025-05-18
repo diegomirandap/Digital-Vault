@@ -6,13 +6,13 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
 
+import static Main.ChaveDigitalAux.gerarBytesAleatorios;
+
 public class TOTPAux {
 
     // Gera os 20 bytes aleatórios e codifica em BASE32
     public static String gerarTOTPBase32() {
-        SecureRandom random = new SecureRandom();
-        byte[] segredo = new byte[20];
-        random.nextBytes(segredo);
+        byte[] segredo = gerarBytesAleatorios(20);
 
         Base32 base32 = new Base32(Base32.Alphabet.BASE32, false, false);
         return base32.toString(segredo);
@@ -34,7 +34,7 @@ public class TOTPAux {
         return cipher.doFinal(texto.getBytes("UTF-8"));
     }
 
-    // (Opcional) Descriptografa segredo
+    // Descriptografa segredo
     public static String descriptografarAES(byte[] cifrado, SecretKeySpec chaveAES) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, chaveAES);

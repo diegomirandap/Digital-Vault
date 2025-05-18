@@ -95,7 +95,7 @@ public class TOTP {
         }
         return false;
     }
-
+    /*
     // --- Exemplo de execução detalhada ---
     public static void main(String[] args) throws Exception {
         String base32Secret = "JBSWY3DPEHPK3PXP"; // chave aletori do user      vai ser preciso criar um processo para adicionar/criar ela
@@ -119,7 +119,7 @@ public class TOTP {
         System.out.println("Antes : " + pastCode);
         System.out.println("Atual : " + currentCode);
         System.out.println("Depois: " + futureCode);
-    }
+    }*/
 }
 
 // bcript para autenticar senha da tela
