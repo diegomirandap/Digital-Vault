@@ -1,7 +1,10 @@
+/*
+Diego Miranda - 2210996
+Felipe Cancella 2210487
+ */
+
 package Main;
 
-import java.io.FileInputStream;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import javax.security.auth.x500.X500Principal;
 import java.util.regex.Matcher;

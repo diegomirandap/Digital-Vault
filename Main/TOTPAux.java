@@ -1,3 +1,8 @@
+/*
+Diego Miranda - 2210996
+Felipe Cancella 2210487
+ */
+
 package Main;
 
 import Main.Base32;

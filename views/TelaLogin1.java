@@ -1,3 +1,8 @@
+/*
+Diego Miranda - 2210996
+Felipe Cancella 2210487
+ */
+
 package views;
 
 import javax.swing.*;
@@ -7,6 +12,7 @@ import Main.*;
 
 public class TelaLogin1 extends JPanel {
     public TelaLogin1(JFrame mainFrame) {
+        DB.inserirLog(2001,null,null);
         setLayout(new GridLayout(3, 1, 10, 10));
 
         JTextField campoEmail = new JTextField(255);
@@ -27,16 +33,9 @@ public class TelaLogin1 extends JPanel {
                 return;
             }
 
-            // Aqui você poderia validar se o e-mail existe no banco
-            //JOptionPane.showMessageDialog(this, "E-mail reconhecido (simulado). Ir para próxima tela...");
-
-            // ainda tem as telas 2 e 3
-
-
-            //TEMPORARIOOOOOOOOOOOOO!!!!!!!!!!!
-
             int uid = DB.buscarUid(email);
             if (uid == -1) {
+                DB.inserirLog(2005,uid,null);
                 JOptionPane.showMessageDialog(this, "E-mail não encontrado.");
                 return;
             }
@@ -45,15 +44,13 @@ public class TelaLogin1 extends JPanel {
             Long tempoDesbloqueio = Main.bloqueios.get(uid);
             if (tempoDesbloqueio != null && System.currentTimeMillis() < tempoDesbloqueio) {
                 long segundosRestantes = (tempoDesbloqueio - System.currentTimeMillis()) / 1000;
+                DB.inserirLog(2004,uid,null);
                 JOptionPane.showMessageDialog(this, "Usuário bloqueado. Tente novamente em " + segundosRestantes + " segundos.");
                 return;
             }
-            DB.incrementarAcessos(uid);
-            /*
-            mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame));
-            mainFrame.revalidate();
-            mainFrame.repaint();*/
             String hash = DB.buscarSenhaHash(uid);
+            DB.inserirLog(2003,uid,null);
+            DB.inserirLog(2002,null,null);
             mainFrame.setContentPane(new TelaLogin2(mainFrame, hash, uid));
             mainFrame.revalidate();
             mainFrame.repaint();

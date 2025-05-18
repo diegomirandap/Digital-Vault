@@ -1,12 +1,21 @@
+/*
+Diego Miranda - 2210996
+Felipe Cancella 2210487
+ */
+
 package views;
 
 import Main.TecladoVirtualSeguro;
 import Main.TecladoVirtualSeguro.Par;
 import Main.Main;
+import org.bouncycastle.crypto.generators.OpenBSDBCrypt;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+
+import DB.*;
 
 public class TelaLogin2 extends JPanel {
     private final JFrame mainFrame;
@@ -23,6 +32,7 @@ public class TelaLogin2 extends JPanel {
     public static final int COMPRIMENTO_MAX = 10;
 
     public TelaLogin2(JFrame frame, String hashDoBanco, int uid) {
+        DB.inserirLog(3001,uid,null);
         this.mainFrame = frame;
         this.hashDoBanco = hashDoBanco;
         this.uid = uid;
@@ -33,12 +43,12 @@ public class TelaLogin2 extends JPanel {
         lblSenha.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblSenha.setFont(new Font("Arial", Font.BOLD, 16));
         add(lblSenha);
-        add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(200));
 
         botoesPanel.setMaximumSize(new Dimension(400, 50));
         botoesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         add(botoesPanel);
-        add(Box.createVerticalStrut(20));
+        add(Box.createVerticalStrut(200));
 
         btnConfirmar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnConfirmar.setEnabled(false);
@@ -81,12 +91,21 @@ public class TelaLogin2 extends JPanel {
 
     private void confirmarSenha() {
         Set<String> combinacoes = TecladoVirtualSeguro.gerarCombinacoesSenha(sequenciaEscolhida);
-        boolean validado = TecladoVirtualSeguro.validarSenha(combinacoes, hashDoBanco);
+        boolean validado = false;
+        String senhaFinal = "";
+        for (String senha : combinacoes) {
+            if (OpenBSDBCrypt.checkPassword(hashDoBanco, senha.toCharArray())) {
+                validado = true;
+                senhaFinal = senha;
+            }
+        }
 
         if (validado) {
             Main.tentativasFalhas.put(uid, 0);
+            DB.inserirLog(3003,uid,null);
             JOptionPane.showMessageDialog(this, "Senha validada com sucesso!");
-            mainFrame.setContentPane(new TelaLogin3(mainFrame, uid, Main.fraseAdm));
+            DB.inserirLog(3002,uid,null);
+            mainFrame.setContentPane(new TelaLogin3(mainFrame, uid, senhaFinal));
             mainFrame.revalidate();
         } else {
             int tentativas = Main.tentativasFalhas.getOrDefault(uid, 0) + 1;
@@ -96,9 +115,14 @@ public class TelaLogin2 extends JPanel {
                 long tempoBloqueio = System.currentTimeMillis() + (2 * 60 * 1000); // 2 minutos
                 Main.bloqueios.put(uid, tempoBloqueio);
                 JOptionPane.showMessageDialog(this, "Usuário bloqueado por 2 minutos após 3 tentativas inválidas.");
+                DB.inserirLog(3006,uid,null);
+                DB.inserirLog(3007,uid,null);
+                DB.inserirLog(3002,uid,null);
                 mainFrame.setContentPane(new TelaLogin1(mainFrame));
             } else {
                 JOptionPane.showMessageDialog(this, "Senha incorreta. Tentativa " + tentativas + "/3.");
+                int mid = 3003 + tentativas;
+                DB.inserirLog(mid,uid,null);
             }
         }
 

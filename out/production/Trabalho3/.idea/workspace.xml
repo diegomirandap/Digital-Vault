@@ -6,15 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5f0a1ff8-20ab-445d-a655-64056baf6c33" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/DB/DB.java" beforeDir="false" afterPath="$PROJECT_DIR$/DB/DB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/TOTP.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main/TOTP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/TOTPAux.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main/TOTPAux.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/TecladoVirtualSeguro.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main/TecladoVirtualSeguro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/Main/TOTP.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/Main/TOTP.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaCadastro.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaCadastro.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaLogin2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Trabalho3/views/TelaLogin2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/TelaCadastro.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TelaCadastro.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/TelaLogin2.java" beforeDir="false" afterPath="$PROJECT_DIR$/views/TelaLogin2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +36,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.DiagnosticoChave.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.TOTP.executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
@@ -64,8 +56,8 @@
   }
 }</component>
   <component name="RunManager" selected="Application.Main.Main">
-    <configuration name="DB" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DB" />
+    <configuration name="DiagnosticoChave" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="DiagnosticoChave" />
       <module name="Trabalho3" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -114,10 +106,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main.Main" />
+        <item itemvalue="Application.DiagnosticoChave" />
         <item itemvalue="Application.Main.TOTP" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.TecladoVirtualSeguro" />
-        <item itemvalue="Application.DB" />
       </list>
     </recent_temporary>
   </component>

@@ -1,3 +1,8 @@
+/*
+Diego Miranda - 2210996
+Felipe Cancella 2210487
+ */
+
 package DB;
 
 import java.sql.Connection;
@@ -9,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 
 public class DB {
-    private static String SUA_SENHA = "@@1";
+    private static String SUA_SENHA = "@Fluminense@1";
     private static final String URL_SERVIDOR = "jdbc:mysql://localhost/?user=root&password=" + SUA_SENHA;
     private static final String URL_BANCO = "jdbc:mysql://localhost/cofredigital?user=root&password=" + SUA_SENHA;
 
@@ -98,10 +103,68 @@ public class DB {
             inserirGrupo("Usuario");
             System.out.println("Tabelas inicializadas com sucesso!");
 
-            // Adicionar constraints
-            /*for (String comando : comandosConstraints) {
-                stmt.execute(comando);
-            }*/
+            inserirMensagem(1001, "Sistema iniciado.");
+            inserirMensagem(1002, "Sistema encerrado.");
+            inserirMensagem(1003, "Sessão iniciada para <login_name>.");
+            inserirMensagem(1004, "Sessão encerrada para <login_name>.");
+            inserirMensagem(1005, "Partida do sistema iniciada para cadastro do administrador.");
+            inserirMensagem(1006, "Partida do sistema iniciada para operação normal pelos usuários.");
+            inserirMensagem(2001, "Autenticação etapa 1 iniciada.");
+            inserirMensagem(2002, "Autenticação etapa 1 encerrada.");
+            inserirMensagem(2003, "Login name <login_name> identificado com acesso liberado.");
+            inserirMensagem(2004, "Login name <login_name> identificado com acesso bloqueado.");
+            inserirMensagem(2005, "Login name <login_name> não identificado.");
+            inserirMensagem(3001, "Autenticação etapa 2 iniciada para <login_name>.");
+            inserirMensagem(3002, "Autenticação etapa 2 encerrada para <login_name>.");
+            inserirMensagem(3003, "Senha pessoal verificada positivamente para <login_name>.");
+            inserirMensagem(3004, "Primeiro erro da senha pessoal contabilizado para <login_name>.");
+            inserirMensagem(3005, "Segundo erro da senha pessoal contabilizado para <login_name>.");
+            inserirMensagem(3006, "Terceiro erro da senha pessoal contabilizado para <login_name>.");
+            inserirMensagem(3007, "Acesso do usuário <login_name> bloqueado pela autenticação etapa 2.");
+            inserirMensagem(4001, "Autenticação etapa 3 iniciada para <login_name>.");
+            inserirMensagem(4002, "Autenticação etapa 3 encerrada para <login_name>.");
+            inserirMensagem(4003, "Token verificado positivamente para <login_name>.");
+            inserirMensagem(4004, "Primeiro erro de token contabilizado para <login_name>.");
+            inserirMensagem(4005, "Segundo erro de token contabilizado para <login_name>.");
+            inserirMensagem(4006, "Terceiro erro de token contabilizado para <login_name>.");
+            inserirMensagem(4007, "Acesso do usuário <login_name> bloqueado pela autenticação etapa 3.");
+            inserirMensagem(5001, "Tela principal apresentada para <login_name>.");
+            inserirMensagem(5002, "Opção 1 do menu principal selecionada por <login_name>.");
+            inserirMensagem(5003, "Opção 2 do menu principal selecionada por <login_name>.");
+            inserirMensagem(5004, "Opção 3 do menu principal selecionada por <login_name>.");
+            inserirMensagem(6001, "Tela de cadastro apresentada para <login_name>.");
+            inserirMensagem(6002, "Botão cadastrar pressionado por <login_name>.");
+            inserirMensagem(6003, "Senha pessoal inválida fornecida por <login_name>.");
+            inserirMensagem(6004, "Caminho do certificado digital inválido fornecido por <login_name>.");
+            inserirMensagem(6005, "Chave privada verificada negativamente para <login_name> (caminho inválido).");
+            inserirMensagem(6006, "Chave privada verificada negativamente para <login_name> (frase secreta inválida).");
+            inserirMensagem(6007, "Chave privada verificada negativamente para <login_name> (assinatura digital inválida).");
+            inserirMensagem(6008, "Confirmação de dados aceita por <login_name>.");
+            inserirMensagem(6009, "Confirmação de dados rejeitada por <login_name>.");
+            inserirMensagem(6010, "Botão voltar de cadastro para o menu principal pressionado por <login_name>.");
+            inserirMensagem(7001, "Tela de consulta de arquivos secretos apresentada para <login_name>.");
+            inserirMensagem(7002, "Botão voltar de consulta para o menu principal pressionado por <login_name>.");
+            inserirMensagem(7003, "Botão Listar de consulta pressionado por <login_name>.");
+            inserirMensagem(7004, "Caminho de pasta inválido fornecido por <login_name>.");
+            inserirMensagem(7005, "Arquivo de índice decriptado com sucesso para <login_name>.");
+            inserirMensagem(7006, "Arquivo de índice verificado (integridade e autenticidade) com sucesso para <login_name>.");
+            inserirMensagem(7007, "Falha na decriptação do arquivo de índice para <login_name>.");
+            inserirMensagem(7008, "Falha na verificação (integridade e autenticidade) do arquivo de índice para <login_name>.");
+            inserirMensagem(7009, "Lista de arquivos presentes no índice apresentada para <login_name>.");
+            inserirMensagem(7010, "Arquivo <arq_name> selecionado por <login_name> para decriptação.");
+            inserirMensagem(7011, "Acesso permitido ao arquivo <arq_name> para <login_name>.");
+            inserirMensagem(7012, "Acesso negado ao arquivo <arq_name> para <login_name>.");
+            inserirMensagem(7013, "Arquivo <arq_name> decriptado com sucesso para <login_name>.");
+            inserirMensagem(7014, "Arquivo <arq_name> verificado (integridade e autenticidade) com sucesso para <login_name>.");
+            inserirMensagem(7015, "Falha na decriptação do arquivo <arq_name> para <login_name>.");
+            inserirMensagem(7016, "Falha na verificação (integridade e autenticidade) do arquivo <arq_name> para <login_name>.");
+            inserirMensagem(8001, "Tela de saída apresentada para <login_name>.");
+            inserirMensagem(8002, "Botão encerrar sessão pressionado por <login_name>.");
+            inserirMensagem(8003, "Botão encerrar sistema pressionado por <login_name>.");
+            inserirMensagem(8004, "Botão voltar de sair para o menu principal pressionado por <login_name>.");
+
+
+
             // Adiciona constraints apenas se ainda não existem
             adicionarConstraintSeNaoExiste(conn, "Usuarios", "fk_usuarios_grupo_id",
                     "ALTER TABLE Usuarios ADD CONSTRAINT fk_usuarios_grupo_id FOREIGN KEY (grupo_id) REFERENCES Grupos(gid)");
@@ -152,6 +215,29 @@ public class DB {
         }
     }
 
+    public static void inserirMensagem(int mid, String descricao) {
+        String sql = "INSERT INTO mensagens(mid, descricao) VALUES(?,?)";
+        String query = "SELECT COUNT(*) FROM mensagens WHERE MID = ?";
+        try (Connection conn = conectar();PreparedStatement check = conn.prepareStatement(query)) {
+            check.setInt(1, mid);
+            ResultSet rs = check.executeQuery();
+            if (rs.next() && rs.getInt(1) == 0) {
+                try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                    stmt.setInt(1, mid);
+                    stmt.setString(2, descricao);
+                    stmt.executeUpdate();
+                    ResultSet rs2 = stmt.getGeneratedKeys();
+                    return;
+                } catch (SQLException e) {
+                    System.err.println("Erro ao inserir Mensagens: " + e.getMessage());
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static boolean atualizarKidDoUsuario(int uid, int kid) {
         String sql = "UPDATE Usuarios SET kid = ? WHERE uid = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -168,6 +254,19 @@ public class DB {
         String sql = "SELECT uid FROM Usuarios WHERE login_name = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("uid");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar UID: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public static Integer buscarUidAdm() {
+        String sql = "SELECT uid FROM Usuarios WHERE grupo_id = 1";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("uid");
@@ -234,6 +333,20 @@ public class DB {
         return null;
     }
 
+    public static Integer contarConsultas(Integer uid) {
+        String sql = "SELECT tot_consultas FROM Usuarios WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("tot_consultas");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar nome: " + e.getMessage());
+        }
+        return null;
+    }
+
     public static String buscarSenhaHash(int id) {
         String sql = "SELECT senha_hash FROM Usuarios WHERE uid = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -257,19 +370,19 @@ public class DB {
             return null;
         }
     }
-    /*
-        public void registrarLog(int mid, Integer uid, String arquivo) {
-            String sql = "INSERT INTO Registros (mid, uid, arquivo) VALUES (?, ?, ?)";
-            try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, mid);
-                if (uid != null) stmt.setInt(2, uid); else stmt.setNull(2, Types.INTEGER);
-                if (arquivo != null) stmt.setString(3, arquivo); else stmt.setNull(3, Types.VARCHAR);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                System.err.println("Erro ao registrar log: " + e.getMessage());
-            }
+
+    public static void inserirLog(int mid, Integer uid, String arquivo) {
+        String sql = "INSERT INTO Registros (mid, uid, arquivo) VALUES (?, ?, ?)";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, mid);
+            if (uid != null) stmt.setInt(2, uid); else stmt.setNull(2, Types.INTEGER);
+            if (arquivo != null) stmt.setString(3, arquivo); else stmt.setNull(3, Types.VARCHAR);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao registrar log: " + e.getMessage());
         }
-    */
+    }
+
     public static void incrementarAcessos(int uid) {
         String sql = "UPDATE Usuarios SET tot_acessos = tot_acessos + 1 WHERE uid = ?";
         try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -287,6 +400,30 @@ public class DB {
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Erro ao incrementar consultas: " + e.getMessage());
+        }
+    }
+
+    public static String buscarCertificadoPEM(int uid) {
+        String sql = "SELECT cert_pem FROM Chaveiro WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getString("cert_pem") : null;
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar certificado PEM: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static byte[] buscarChavePrivada(int uid) {
+        String sql = "SELECT chave_privada FROM Chaveiro WHERE uid = ?";
+        try (Connection conn = conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, uid);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next() ? rs.getBytes("chave_privada") : null;
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar chave privada: " + e.getMessage());
+            return null;
         }
     }
 
@@ -315,11 +452,6 @@ public class DB {
         }
 
         return false;
-    }
-
-    public static void addLog(int mid, String email, String filename){
-
-        return;
     }
 
     public static int contarUsuarios() {

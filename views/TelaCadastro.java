@@ -1,9 +1,16 @@
+/*
+Diego Miranda - 2210996
+Felipe Cancella 2210487
+ */
+
 package views;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -22,6 +29,7 @@ public class TelaCadastro extends JPanel {
         if (fecharAposCadastro)
             setLayout(new GridLayout(8, 2, 5, 5));
         else{
+            DB.inserirLog(6001,uidLog,null);
             setLayout(new GridLayout(12, 2, 5, 5));
             add(new JLabel("Login: " + DB.buscarEmail(uidLog)));
             add(new JLabel("Grupo: " + DB.buscarGrupo(uidLog)));
@@ -50,6 +58,7 @@ public class TelaCadastro extends JPanel {
         JButton botaoVoltar = new JButton("Voltar");
 
         botaoCadastrar.addActionListener(e -> {
+            DB.inserirLog(6002,uidLog,null);
             String caminhoCert = campoCert.getText().trim();
             String caminhoChave = campoChave.getText().trim();
             String frase = campoFrase.getText().trim();
@@ -59,10 +68,12 @@ public class TelaCadastro extends JPanel {
 
             if (!senha.equals(confSenha)) {
                 JOptionPane.showMessageDialog(this, "As senhas não coincidem.");
+                DB.inserirLog(6003,uidLog,null);
                 return;
             }
             if (senha.length() < 8 || senha.length() > 10 || temDigitosRepetidos(senha)) {
                 JOptionPane.showMessageDialog(this, "Senha inválida: deve ter 8 a 10 dígitos sem repetições consecutivas.");
+                DB.inserirLog(6003,uidLog,null);
                 return;
             }
 
@@ -109,18 +120,14 @@ public class TelaCadastro extends JPanel {
                 }
 
                 // 4. Validação de chave privada
-                /*
-                PrivateKey chavePrivada = ChaveDigitalAux.carregarChavePrivada(caminhoChave, frase);
+
+                byte[] chaveCriptografada = Files.readAllBytes(Path.of(caminhoChave));
+                PrivateKey chavePrivada = ChaveDigitalAux.reconstruirChavePrivada(chaveCriptografada, frase);
                 byte[] dadosTeste = ChaveDigitalAux.gerarBytesAleatorios(8192);
                 byte[] assinatura = ChaveDigitalAux.assinarComChavePrivada(dadosTeste, chavePrivada);
                 boolean verificado = ChaveDigitalAux.verificarAssinatura(dadosTeste, assinatura, cert.getPublicKey());
                 if (!verificado) {
-                    JOptionPane.showMessageDialog(this, "Assinatura inválida.");
-                    return;
-                }*/
-                PrivateKey chavePrivada = ChaveDigitalAux.carregarChavePrivada(caminhoChave, frase);
-                boolean verificado = ChaveDigitalAux.validarChaveComCertificado(chavePrivada, cert);
-                if (!verificado) {
+                    DB.inserirLog(6007,uidLog,null);
                     JOptionPane.showMessageDialog(this, "Assinatura inválida.");
                     return;
                 }
@@ -128,7 +135,7 @@ public class TelaCadastro extends JPanel {
                     // 5. Processa TOTP e hash
                 String hashSenha = TecladoVirtualSeguro.criarSenha(senha);
                 String segredoTOTP = TOTPAux.gerarTOTPBase32();
-                SecretKeySpec chaveAES = TOTPAux.gerarChaveAES(frase);
+                SecretKeySpec chaveAES = TOTPAux.gerarChaveAES(senha);
                 byte[] secretTotp = TOTPAux.criptografarAES(segredoTOTP, chaveAES);
 
                 int grupoId = grupo.equals("Administrador") ? 1 : 2;
@@ -144,8 +151,7 @@ public class TelaCadastro extends JPanel {
                 }
 
                 String pemCert = ChaveDigitalAux.converterCertificadoParaPEM(cert);
-                byte[] chaveBinaria = chavePrivada.getEncoded();
-                int kid = DB.inserirChaveiro(uid, pemCert, chaveBinaria);
+                int kid = DB.inserirChaveiro(uid, pemCert, chaveCriptografada);
                 if (kid == -1) {
                     JOptionPane.showMessageDialog(this, "Erro ao salvar chave.");
                     return;
@@ -158,22 +164,26 @@ public class TelaCadastro extends JPanel {
                 JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!\n\nCódigo TOTP: " + segredoTOTP);
                 QRCode.mostrarQRCode(uri);
 
+                DB.inserirLog(6008,uidLog,null);
+
                 // 7. Redirecionamento
                 if (fecharAposCadastro) {
                     System.exit(0);
                 } else {
-                    mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame, uid));
+                    mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame, uidLog));
                     mainFrame.revalidate();
                     mainFrame.repaint();
                 }
 
             } catch (Exception ex) {
                 ex.printStackTrace();
+                DB.inserirLog(6009,uidLog,null);
                 JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage());
             }
         });
 
         botaoVoltar.addActionListener(e -> {
+            DB.inserirLog(6010,uidLog,null);
             if (!fecharAposCadastro) {
                 mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame, uidLog));
                 mainFrame.revalidate();
