@@ -17,7 +17,7 @@ public class TelaFraseAdm extends JPanel {
     public TelaFraseAdm(JFrame mainFrame) {
         setLayout(new GridLayout(3, 1, 10, 10));
 
-        JTextField campoFrase = new JTextField(255);
+        JPasswordField campoFrase = new JPasswordField(255);
         JButton botaoEntrar = new JButton("Entrar");
         JButton botaoSair = new JButton("Sair");
 

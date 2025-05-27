@@ -17,7 +17,8 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 
 public class TelaConsulta extends JPanel {
-    private JTextField campoPasta, campoFrase;
+    private JTextField campoPasta;
+    private JPasswordField campoFrase;
     private JTable tabelaArquivos;
     private DefaultTableModel modelo;
 
@@ -32,7 +33,7 @@ public class TelaConsulta extends JPanel {
         topo.add(new JLabel("Total de consultas do usuário: " + DB.contarConsultas(uid)));
 
         campoPasta = new JTextField(255);
-        campoFrase = new JTextField(255);
+        campoFrase = new JPasswordField(255);
 
         topo.add(new JLabel("Caminho da pasta:"));
         topo.add(campoPasta);

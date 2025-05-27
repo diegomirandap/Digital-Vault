@@ -13,6 +13,7 @@ import java.nio.file.*;
 import java.security.*;
 import java.security.cert.*;
 import java.security.spec.*;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -163,9 +164,6 @@ public class ChaveDigitalAux {
         byte[] assinatura = Files.readAllBytes(arqAsd.toPath());
         byte[] conteudoCriptografado = Files.readAllBytes(arqEnc.toPath());
 
-        boolean ok = verificarAssinatura(conteudoCriptografado, assinatura, chavePublica);
-        if (!ok) throw new SecurityException("Assinatura do arquivo inválida.");
-
         // Recupera semente do envelope
         byte[] semente = ChaveDigitalAux.desenvelopar(arqEnv, chavePrivada);
 
@@ -179,6 +177,10 @@ public class ChaveDigitalAux {
         cipher.init(Cipher.DECRYPT_MODE, chaveAES);
         byte[] plano = cipher.doFinal(conteudoCriptografado);
 
+        // apos o decriptar apenas
+        boolean ok = verificarAssinatura(plano, assinatura, chavePublica);
+        System.out.println(Arrays.toString(assinatura));
+        if (!ok) throw new SecurityException("Assinatura do arquivo inválida.");
         // Salva conteúdo em novo arquivo
         Path destino = Path.of(arqEnc.getParent(), nomeSaida);
         Files.write(destino, plano);

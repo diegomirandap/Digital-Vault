@@ -33,8 +33,8 @@ public class TelaLogin1 extends JPanel {
                 return;
             }
 
-            int uid = DB.buscarUid(email);
-            if (uid == -1) {
+            Integer uid = DB.buscarUid(email);
+            if (uid == null) {
                 DB.inserirLog(2005,uid,null);
                 JOptionPane.showMessageDialog(this, "E-mail não encontrado.");
                 return;
@@ -52,6 +52,7 @@ public class TelaLogin1 extends JPanel {
             DB.inserirLog(2003,uid,null);
             DB.inserirLog(2002,null,null);
             mainFrame.setContentPane(new TelaLogin2(mainFrame, hash, uid));
+            //mainFrame.setContentPane(new TelaMenuPrincipal(mainFrame, uid));
             mainFrame.revalidate();
             mainFrame.repaint();
         });

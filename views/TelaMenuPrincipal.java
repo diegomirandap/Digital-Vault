@@ -14,6 +14,8 @@ public class TelaMenuPrincipal extends JPanel {
 
     public TelaMenuPrincipal(JFrame mainFrame, Integer uid) {
         DB.inserirLog(5001,uid,null);
+        Integer grupo = DB.buscarGrupo(uid);
+
         setLayout(new GridLayout(8, 1, 5, 5));
 
         add(new JLabel("Login: " + DB.buscarEmail(uid)));
@@ -26,6 +28,12 @@ public class TelaMenuPrincipal extends JPanel {
         add(titulo);
 
         JButton btnCadastrar = new JButton("1 - Cadastrar novo usuário");
+        if (grupo == 1){
+            btnCadastrar.setEnabled(true);
+        }
+        else{
+            btnCadastrar.setEnabled(false);
+        }
         JButton btnConsultar = new JButton("2 - Consultar arquivos secretos");
         JButton btnSair = new JButton("3 - Sair do sistema");
 

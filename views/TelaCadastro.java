@@ -39,7 +39,7 @@ public class TelaCadastro extends JPanel {
 
         campoCert = new JTextField(255);
         campoChave = new JTextField(255);
-        campoFrase = new JTextField(255);
+        campoFrase = new JPasswordField(255);
         campoSenha = new JPasswordField(10);
         campoConfirmacao = new JPasswordField(10);
 

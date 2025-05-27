@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 
 public class DB {
-    private static String SUA_SENHA = "@Fluminense@1";
+    private static String SUA_SENHA = "@@1";
     private static final String URL_SERVIDOR = "jdbc:mysql://localhost/?user=root&password=" + SUA_SENHA;
     private static final String URL_BANCO = "jdbc:mysql://localhost/cofredigital?user=root&password=" + SUA_SENHA;
 
@@ -478,5 +478,48 @@ public class DB {
             }
         }
     }
+    public static void mostraLog() {
+        String sql = "SELECT " +
+                "r.mid, " +
+                "r.rid, " +
+                "m.descricao, " +
+                "u.login_name, " +
+                "r.timestamp " +
+                "FROM Registros r " +
+                "JOIN Mensagens m ON r.mid = m.mid " +
+                "LEFT JOIN Usuarios u ON r.uid = u.uid " +
+                "ORDER BY r.rid DESC";
+
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            System.out.printf("%-20s | %-5s | %-90s | %-20s%n", "Timestamp", "MID", "Descrição", "Login");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            while (rs.next()) {
+                int mid = rs.getInt("mid");
+                String login = rs.getString("login_name");
+                String timestamp = rs.getString("timestamp");
+                String descricao = rs.getString("descricao");
+
+                // Substituir <login_name> pelo login (ou por "(anônimo)" se null)
+                String loginDisplay = (login != null) ? login : "(anônimo)";
+                if (descricao != null && descricao.contains("<login_name>")) {
+                    descricao = descricao.replace("<login_name>", loginDisplay);
+                }
+
+                System.out.printf("%-20s | %-5d | %-90s | %-20s%n",
+                        timestamp,
+                        mid,
+                        descricao,
+                        loginDisplay);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao consultar registros: " + e.getMessage());
+        }
+    }
+
 }
 
